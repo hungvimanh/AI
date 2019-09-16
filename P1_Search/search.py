@@ -18,6 +18,7 @@ Pacman agents (in searchAgents.py).
 """
 
 import util
+import heapq
 
 class SearchProblem:
     """
@@ -91,7 +92,6 @@ def depthFirstSearch(problem):
     visited = []
 
     if(problem.isGoalState(problem.getStartState())):
-      print "Is the start a goal?"
       return []
 
     myStack.push((problem.getStartState(), []))
@@ -99,7 +99,6 @@ def depthFirstSearch(problem):
       state, actions = myStack.pop()
       if state not in visited:
         if problem.isGoalState(state):
-          print "Found Goal with DFS"
           return actions
         else:
           visited.append(state)
@@ -117,7 +116,6 @@ def breadthFirstSearch(problem):
       state, actions = myQueue.pop()
       if state not in Visited:
         if problem.isGoalState(state):
-          print "Found Goal with BFS"
           return actions
         else:
           Visited.append(state)
@@ -127,22 +125,38 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    myPQueue = util.PriorityQueue()
+    def _update(Frontier, item, priority):
+      for index, (p, c, i) in enumerate(Frontier.heap):
+        if i[0] == item[0]:
+          if p <= priority:
+            break
+          del Frontier.heap[index]
+          Frontier.heap.append((priority, c, item))
+          heapq.heapify(Frontier.heap)
+          break
+      else:
+        Frontier.push(item, priority)
+
+    Frontier = util.PriorityQueue()
     Visited = []
+
     begin = problem.getStartState()
-    myPQueue.push((begin, []), 0)
-    while not myPQueue.isEmpty():
-      state, actions = myPQueue.pop()
+    Frontier.push((begin, []), 0)
+
+    while not Frontier.isEmpty():
+      state, actions = Frontier.pop()
+
       if problem.isGoalState(state):
-        print "Found Goal with UCS"
         return actions
       if state not in Visited:
         Visited.append(state)
+
       for next_branch in problem.getSuccessors(state):
         n_state = next_branch[0]
         n_actions = next_branch[1]
+
         if n_state not in Visited:
-          myPQueue.update((n_state, actions+[n_actions]), problem.getCostOfActions(actions+[n_actions]))
+          _update(Frontier, (n_state, actions+[n_actions]), problem.getCostOfActions(actions+[n_actions]))
 
 def nullHeuristic(state, problem=None):
     """
@@ -154,24 +168,38 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    myPQueue = util.PriorityQueue()
+    def _update(Frontier, item, priority):
+      for index, (p, c, i) in enumerate(Frontier.heap):
+        if i[0] == item[0]:
+          if p <= priority:
+            break
+          del Frontier.heap[index]
+          Frontier.heap.append((priority, c, item))
+          heapq.heapify(Frontier.heap)
+          break
+      else:
+        Frontier.push(item, priority)
+
+    Frontier = util.PriorityQueue()
     Visited = []
+
     begin = problem.getStartState()
-    myPQueue.push((begin, []), 0)
+    Frontier.push((begin, []), 0)
     Visited.append(begin)
-    while not myPQueue.isEmpty():
-      state, actions = myPQueue.pop()
+
+    while not Frontier.isEmpty():
+      state, actions = Frontier.pop()
       if problem.isGoalState(state):
-        print "Found Goal with Astar"
         return actions
       if state not in Visited:
         Visited.append(state)
+
       for next_branch in problem.getSuccessors(state):
         n_state = next_branch[0]
         n_actions = next_branch[1]
-        if n_state not in Visited:
-          myPQueue.update((n_state, actions+[n_actions]), problem.getCostOfActions(actions+[n_actions]) + heuristic(n_state, problem))
 
+        if n_state not in Visited:
+          _update(Frontier, (n_state, actions+[n_actions]), problem.getCostOfActions(actions+[n_actions]) + heuristic(n_state, problem))      
 
 # Abbreviations
 bfs = breadthFirstSearch
