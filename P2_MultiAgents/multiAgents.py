@@ -152,7 +152,6 @@ class MinimaxAgent(MultiAgentSearchAgent):
                    depth += 1
                 return min(minimax(nextAgent, depth, gameState.generateSuccessor(agent, newState)) for newState in gameState.getLegalActions(agent))
 
-        """Performing maximize action for the root node i.e. pacman"""
         maximum = float("-inf")
         action = Directions.WEST
         for agentState in gameState.getLegalActions(0):
@@ -219,9 +218,6 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                             b = min(result[0],b)
             return result
 
-        # Call AB with initial depth = 0 and -inf and inf(a,b) values      #
-        # Get an action                                                    #
-        # Pacman plays first -> self.index                                 #
         return AB(gameState,self.index,0,-float("inf"),float("inf"))[1]
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
@@ -238,31 +234,22 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         """
         "*** YOUR CODE HERE ***"
         def expectimax_search(state, agentIndex, depth):
-            # if in min layer and last ghost
             if agentIndex == state.getNumAgents():
-                # if reached max depth, evaluate state
                 if depth == self.depth:
                     return self.evaluationFunction(state)
-                # otherwise start new max layer with bigger depth
                 else:
                     return expectimax_search(state, 0, depth + 1)
-            # if not min layer and last ghost
             else:
                 moves = state.getLegalActions(agentIndex)
-                # if nothing can be done, evaluate the state
                 if len(moves) == 0:
                     return self.evaluationFunction(state)
-                # get all the minimax values for the next layer with each node being a possible state after a move
                 next = (expectimax_search(state.generateSuccessor(agentIndex, m), agentIndex + 1, depth) for m in moves)
 
-                # if max layer, return max of layer below
                 if agentIndex == 0:
                     return max(next)
-                # if min layer, return expectimax values
                 else:
                     l = list(next)
                     return sum(l) / len(l)
-        # select the action with the greatest minimax value
         result = max(gameState.getLegalActions(0), key=lambda x: expectimax_search(gameState.generateSuccessor(0, x), 1, 1))
 
         return result

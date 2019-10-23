@@ -1,0 +1,17 @@
+# Câu 1: Vi?t hàm dánh giá theo các c?p state-action
+- Hàm du?c vi?t theo tiêu chí tham an và tránh ma.
+
+# Câu 2: MinimaxAgent
+- minimax(agent, depth, gameState): quy?t d?nh giá tr? tr? v? c?a tác nhân
+ + Tr? maxmize cho Pacman n?u agent = 0.
+ + Ngu?c l?i minmize cho ghost và tính toán các agent ti?p theo, tang d? sâu.
+ 
+ # Câu 3: AlphaBeta
+ - Tìm các giá tr? min max cho các bu?c di k? ti?p và so sánh v?i giá tr? min max tru?c dó d? xem có t?i uu hon không.
+ 
+ # Câu 4: Expectimax Search
+ - Pacman uu tiên vi?c an hon là tránh ma n?u th?y con du?ng v?a an du?c mà không b? ch?t thì s? uu tiên l?a ch?n.
+ 
+ # Câu 5: Hàm dánh giá theo state
+ - Tuong t? câu 1, nhung dánh giá theo state-action thay vì state action pairs.
+
