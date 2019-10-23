@@ -1,1 +1,1 @@
-# AI
+# Pacman Project
