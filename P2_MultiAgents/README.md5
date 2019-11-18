@@ -1,17 +1,17 @@
-# C�u 1: Vi?t h�m d�nh gi� theo c�c c?p state-action
-- H�m du?c vi?t theo ti�u ch� tham an v� tr�nh ma.
+# Câu 1: Viết hàm đánh giá theo các cặp state-action
+- Hàm được viết theo tiêu chí tham ăn và tránh ma.
 
-# C�u 2: MinimaxAgent
-- minimax(agent, depth, gameState): quy?t d?nh gi� tr? tr? v? c?a t�c nh�n
- + Tr? maxmize cho Pacman n?u agent = 0.
- + Ngu?c l?i minmize cho ghost v� t�nh to�n c�c agent ti?p theo, tang d? s�u.
+# Câu 2: MinimaxAgent
+- minimax(agent, depth, gameState): quyết định giá trị trả về của tác nhân
+ + Trả maxmize cho Pacman nếu agent = 0.
+ + Ngược lại minmize cho ghost và tính toán các agent tiếp theo, tăng độ sâu.
  
- # C�u 3: AlphaBeta
- - T�m c�c gi� tr? min max cho c�c bu?c di k? ti?p v� so s�nh v?i gi� tr? min max tru?c d� d? xem c� t?i uu hon kh�ng.
+ # Câu 3: AlphaBeta
+ - Tìm các giá trị min max cho các bước đi kế tiếp và so sánh với giá trị min max trước đó để xem có tối ưu hơn không.
  
- # C�u 4: Expectimax Search
- - Pacman uu ti�n vi?c an hon l� tr�nh ma n?u th?y con du?ng v?a an du?c m� kh�ng b? ch?t th� s? uu ti�n l?a ch?n.
+ # Câu 4: Expectimax Search
+ - Pacman ưu tiên việc ăn hơn là tránh ma nếu thấy con đường vừa ăn được mà không bị chết thì sẽ ưu tiên lựa chọn.
  
- # C�u 5: H�m d�nh gi� theo state
- - Tuong t? c�u 1, nhung d�nh gi� theo state-action thay v� state action pairs.
+ # Câu 5: Hàm đánh giá theo state
+ - Tương tự câu 1, nhưng đánh giá theo state-action thay vì state action pairs.
 
